@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { API_BASE_URL } from "@/Baseurl";
+import { forgotPasswordApi } from "@/lib/authApi";
+import { Button } from "@/components/Button";
 import { FloatingInput } from "@/components/FloatingInput";
 
 export default function ForgotPasswordPage() {
@@ -18,21 +19,10 @@ export default function ForgotPasswordPage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data?.message || "Unable to send recovery code.");
-        return;
-      }
-
+      await forgotPasswordApi({ email });
       router.push(`/verify-otp?email=${encodeURIComponent(email)}`);
-    } catch {
-      setError("Unable to reach the server. Please try again.");
+    } catch (err) {
+      setError(err.message || "Unable to send recovery code.");
     } finally {
       setIsSubmitting(false);
     }
@@ -70,13 +60,9 @@ export default function ForgotPasswordPage() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full cursor-pointer rounded-full bg-[#9FE870] py-3 text-sm font-semibold text-[#163300] transition hover:bg-[#8ee05a] disabled:cursor-not-allowed disabled:opacity-60"
-        >
+        <Button type="submit" fullWidth disabled={isSubmitting}>
           {isSubmitting ? "Sending Code..." : "Send OTP"}
-        </button>
+        </Button>
       </form>
 
       <div className="mt-6 text-center">

@@ -1,3 +1,5 @@
+import { AuthLeftSlider } from "@/components/AuthLeftSlider";
+
 export default function AuthLayout({ children }) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-white lg:flex-row">
@@ -25,22 +27,8 @@ export default function AuthLayout({ children }) {
           </div>
         </div>
 
-        {/* Bottom Caption & Indicator Dots */}
-        <div className="relative z-10 mx-auto max-w-md space-y-3 text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-white">
-            Manage Your LMS Faster
-          </h2>
-          <p className="text-sm leading-relaxed text-white/70">
-            Oversee courses, learners, enrollments, and platform operations from
-            one unified admin workspace.
-          </p>
-          <div className="flex items-center justify-center gap-1.5 pt-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-            <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-            <span className="h-1.5 w-1.5 rounded-full bg-white" />
-            <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-          </div>
-        </div>
+        {/* Bottom Caption Slider */}
+        <AuthLeftSlider />
       </div>
 
       {/* Right Side Dynamic Content */}
