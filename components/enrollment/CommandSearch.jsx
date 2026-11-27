@@ -100,7 +100,7 @@ export function CommandSearch({
           }}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="w-full rounded-lg border border-zinc-200 bg-white py-2 pl-10 pr-16 text-sm text-zinc-900 placeholder:text-zinc-400 shadow-xs outline-none transition focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-lg border border-border-default bg-surface py-2 pl-10 pr-16 text-sm text-text-primary placeholder:text-text-subtle shadow-xs outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/40"
         />
 
         <kbd className="pointer-events-none absolute right-2.5 hidden rounded border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 font-mono text-[10px] font-medium text-zinc-500 sm:inline-block dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">

@@ -241,7 +241,7 @@ export function EnrollmentDrawer({ enrollmentId, onClose, onUpdated }) {
                 }
               }}
               className={`cursor-pointer border-b-2 px-4 py-3 transition ${activeTab === tab.id
-                ? "border-[#163300] text-[#163300] dark:border-[#9FE870] dark:text-[#9FE870]"
+                ? "border-primary text-brand-accent"
                 : "border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
                 }`}
             >
@@ -324,7 +324,7 @@ export function EnrollmentDrawer({ enrollmentId, onClose, onUpdated }) {
                         setEditForm((p) => ({ ...p, notes: e.target.value }))
                       }
                       placeholder="Notes..."
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-4 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40 disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                      className="w-full rounded-lg border border-border-default bg-surface px-4 py-2.5 text-sm text-text-primary placeholder:text-text-subtle outline-none focus:border-primary focus:ring-2 focus:ring-primary/40 disabled:cursor-not-allowed disabled:bg-surface-subtle disabled:text-text-muted"
                     />
                   </div>
                 </form>

@@ -48,7 +48,7 @@ const STATUS_DESCRIPTIONS = {
 };
 
 const INPUT_CLASS =
-  "w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40 disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100";
+  "w-full rounded-lg border border-border-default bg-surface px-3.5 py-2.5 text-sm text-text-primary placeholder:text-text-subtle outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/40 disabled:cursor-not-allowed disabled:bg-surface-subtle disabled:text-text-muted";
 
 const LABEL_CLASS =
   "mb-1.5 block text-xs font-semibold text-zinc-700 dark:text-zinc-300";
@@ -338,11 +338,10 @@ export function UserDrawer({ userId, onClose, onUpdated }) {
                 setConfirmStatusOpen(false);
                 setActiveTab(tab.id);
               }}
-              className={`shrink-0 cursor-pointer border-b-2 px-4 py-3 transition ${
-                activeTab === tab.id
-                  ? "border-[#163300] text-[#163300] dark:border-[#9FE870] dark:text-[#9FE870]"
+              className={`shrink-0 cursor-pointer border-b-2 px-4 py-3 transition ${activeTab === tab.id
+                  ? "border-primary text-brand-accent"
                   : "border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
-              }`}
+                }`}
             >
               {tab.label}
             </button>
@@ -394,10 +393,9 @@ export function UserDrawer({ userId, onClose, onUpdated }) {
                 <div className="space-y-5">
                   <div className="flex flex-wrap items-center gap-2">
                     <span
-                      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${
-                        STATUS_STYLES[currentStatusKey] ||
+                      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLES[currentStatusKey] ||
                         "border-zinc-200 bg-zinc-100 text-zinc-600"
-                      }`}
+                        }`}
                     >
                       {STATUS_LABELS[currentStatusKey] || currentStatusKey}
                     </span>
@@ -549,10 +547,9 @@ export function UserDrawer({ userId, onClose, onUpdated }) {
                       Current Status
                     </span>
                     <span
-                      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${
-                        STATUS_STYLES[currentStatusKey] ||
+                      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLES[currentStatusKey] ||
                         "border-zinc-200 bg-zinc-100 text-zinc-600"
-                      }`}
+                        }`}
                     >
                       {STATUS_LABELS[currentStatusKey] || currentStatusKey}
                     </span>

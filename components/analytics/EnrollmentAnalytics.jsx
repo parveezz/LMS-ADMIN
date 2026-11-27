@@ -195,7 +195,7 @@ export function EnrollmentAnalytics() {
             type="date"
             value={from}
             onChange={(e) => setFrom(e.target.value)}
-            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-[#163300] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary outline-none focus:border-primary"
           />
         </div>
 
@@ -211,7 +211,7 @@ export function EnrollmentAnalytics() {
             type="date"
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-[#163300] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary outline-none focus:border-primary"
           />
         </div>
 
@@ -228,7 +228,7 @@ export function EnrollmentAnalytics() {
             value={courseId}
             onChange={(e) => setCourseId(e.target.value)}
             placeholder="Optional course UUID"
-            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#163300] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-subtle outline-none focus:border-primary"
           />
         </div>
 
@@ -245,7 +245,7 @@ export function EnrollmentAnalytics() {
             value={batchId}
             onChange={(e) => setBatchId(e.target.value)}
             placeholder="Optional batch UUID"
-            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#163300] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-subtle outline-none focus:border-primary"
           />
         </div>
 
@@ -335,7 +335,7 @@ export function EnrollmentAnalytics() {
                     <span className="text-xs font-semibold uppercase tracking-wider">
                       {card.label}
                     </span>
-                    <Icon className="h-4 w-4 text-[#163300] dark:text-[#9FE870]" />
+                    <Icon className="h-4 w-4 text-brand-accent" />
                   </div>
                   <p className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
                     {card.value}
@@ -381,7 +381,7 @@ export function EnrollmentAnalytics() {
                         className={[
                           "w-full rounded-t-sm transition-all",
                           count > 0
-                            ? "bg-[#9FE870] group-hover:bg-[#163300]"
+                            ? "bg-primary group-hover:bg-primary-active"
                             : "bg-zinc-100 dark:bg-zinc-800",
                         ].join(" ")}
                       />
@@ -416,7 +416,7 @@ export function EnrollmentAnalytics() {
               </h3>
               <Link
                 href="/enrollments"
-                className="text-xs font-semibold text-[#163300] hover:underline dark:text-[#9FE870]"
+                className="text-xs font-semibold text-brand-accent hover:underline"
               >
                 View all
               </Link>

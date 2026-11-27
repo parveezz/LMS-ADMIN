@@ -12,7 +12,7 @@ export function Button({
     <button
       type={type}
       className={[
-        "inline-flex cursor-pointer items-center justify-center gap-2 rounded-sm bg-[#9FE870] px-4 py-3 text-sm font-semibold text-[#163300] transition-all hover:bg-[#8ee05a] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60",
+        "inline-flex cursor-pointer items-center justify-center gap-2 rounded-sm bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary-hover active:bg-primary-active active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60",
         widthClass,
         className,
       ]

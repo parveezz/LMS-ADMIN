@@ -24,6 +24,7 @@ function StudentsListContent() {
   const canAccessStudents =
     hasPermission(PERMISSIONS.USERS_READ) &&
     hasAnyRole(ALLOWED_STUDENT_LIST_ROLES);
+  const canViewStudentDetails = hasAnyRole([ROLES.SUPER_ADMIN, ROLES.ADMIN]);
 
   const [students, setStudents] = useState([]);
   const [pagination, setPagination] = useState({
@@ -83,7 +84,7 @@ function StudentsListContent() {
       } else if (err.status === 403) {
         setError(
           err.message ||
-            "You do not have permission to access the students directory."
+          "You do not have permission to access the students directory."
         );
       } else {
         setError(err.message || "Unable to load students.");
@@ -201,16 +202,21 @@ function StudentsListContent() {
           isLoading={isLoading}
           hasActiveFilters={hasActiveFilters}
           pagination={pagination}
+          canViewDetails={canViewStudentDetails}
           onPageChange={setPage}
           onLimitChange={(nextLimit) => {
             setLimit(nextLimit);
             setPage(1);
           }}
-          onViewStudent={(student) => setSelectedStudent(student)}
+          onViewStudent={
+            canViewStudentDetails
+              ? (student) => setSelectedStudent(student)
+              : undefined
+          }
         />
       )}
 
-      {selectedStudent && (
+      {canViewStudentDetails && selectedStudent && (
         <StudentDetailsDrawer
           key={selectedStudent.user_id}
           studentSummary={selectedStudent}

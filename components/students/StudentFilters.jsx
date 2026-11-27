@@ -50,7 +50,7 @@ export function StudentFilters({
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search by name, email, phone, or student code..."
           aria-label="Search students"
-          className="w-full rounded-lg border border-zinc-200 bg-white py-2 pl-10 pr-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-lg border border-border-default bg-surface py-2 pl-10 pr-3.5 text-sm text-text-primary placeholder:text-text-subtle outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/40"
         />
       </div>
 
@@ -59,7 +59,7 @@ export function StudentFilters({
           value={status}
           onChange={(e) => onStatusChange(e.target.value)}
           aria-label="Filter by status"
-          className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 outline-none focus:border-[#163300] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200"
+          className="rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-secondary outline-none focus:border-primary"
         >
           {STATUS_OPTIONS.map((opt) => (
             <option key={opt.value || "all"} value={opt.value}>
@@ -72,7 +72,7 @@ export function StudentFilters({
           value={sortBy}
           onChange={(e) => onSortByChange(e.target.value)}
           aria-label="Sort students by"
-          className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 outline-none focus:border-[#163300] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200"
+          className="rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-secondary outline-none focus:border-primary"
         >
           {SORT_BY_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -85,7 +85,7 @@ export function StudentFilters({
           value={sortOrder}
           onChange={(e) => onSortOrderChange(e.target.value)}
           aria-label="Sort order"
-          className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 outline-none focus:border-[#163300] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200"
+          className="rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-secondary outline-none focus:border-primary"
         >
           {SORT_ORDER_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>

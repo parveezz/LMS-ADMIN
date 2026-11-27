@@ -2,9 +2,9 @@ import { AuthLeftSlider } from "@/components/AuthLeftSlider";
 
 export default function AuthLayout({ children }) {
   return (
-    <div className="flex min-h-screen w-full flex-col bg-white lg:flex-row">
+    <div className="flex min-h-screen w-full flex-col bg-surface lg:flex-row">
       {/* Left Side Panel — customize your image and left-side content here */}
-      <div className="relative hidden flex-col justify-between overflow-hidden bg-[#163300] p-12 text-white lg:flex lg:w-[46%]">
+      <div className="relative hidden flex-col justify-between overflow-hidden bg-brand-panel p-12 text-white lg:flex lg:w-[46%]">
         {/* Subtle vertical dashed grid lines */}
         <div
           aria-hidden="true"
@@ -32,7 +32,7 @@ export default function AuthLayout({ children }) {
       </div>
 
       {/* Right Side Dynamic Content */}
-      <main className="flex flex-1 items-center justify-center bg-white px-6 py-12 sm:px-12">
+      <main className="flex flex-1 items-center justify-center bg-surface px-6 py-12 sm:px-12">
         <div className="w-full max-w-[400px]">{children}</div>
       </main>
     </div>

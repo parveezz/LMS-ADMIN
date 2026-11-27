@@ -49,7 +49,7 @@ const ALLOWED_STATUS_ACTIONS = {
       description:
         "Target status: Published. Publishing makes this course live and requires at least one active, teaching-eligible assigned instructor.",
       buttonClass:
-        "border-[#163300] bg-[#163300] text-[#9FE870] hover:bg-[#1e4600]",
+        "border-primary bg-primary text-primary-foreground hover:bg-primary-hover",
     },
     {
       nextStatus: "archived",
@@ -536,7 +536,7 @@ export function CourseDetailsDrawer({ courseId, onClose, onUpdated }) {
                         href={course.thumbnail_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 break-all text-xs font-medium text-[#163300] underline dark:text-[#9FE870]"
+                        className="inline-flex items-center gap-1.5 break-all text-xs font-medium text-brand-accent underline"
                       >
                         <span>{course.thumbnail_url}</span>
                         <FiExternalLink className="h-3.5 w-3.5 shrink-0" />

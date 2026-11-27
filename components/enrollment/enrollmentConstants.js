@@ -28,7 +28,7 @@ export const STATUS_BADGE_STYLES = {
   registered: "bg-emerald-50 text-emerald-700 border-emerald-200",
   confirmed: "bg-emerald-50 text-emerald-700 border-emerald-200",
   paid: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  completed: "bg-[#9FE870]/30 text-[#163300] border-[#9FE870]",
+  completed: "bg-brand-soft text-brand-accent border-brand-soft-border",
 
   // Negative / Warning
   cancelled: "bg-red-50 text-red-700 border-red-200",

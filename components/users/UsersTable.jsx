@@ -12,7 +12,7 @@ const ROLE_LABELS = {
 
 const ROLE_STYLES = {
   super_admin: "border-purple-200 bg-purple-50 text-purple-700",
-  admin: "border-[#9FE870] bg-[#9FE870]/30 text-[#163300]",
+  admin: "border-brand-soft-border bg-brand-soft text-brand-accent",
   staff: "border-sky-200 bg-sky-50 text-sky-700",
   instructor: "border-indigo-200 bg-indigo-50 text-indigo-700",
   student: "border-zinc-200 bg-zinc-100 text-zinc-700",

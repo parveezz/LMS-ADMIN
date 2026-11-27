@@ -1,13 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+
+  --brand-primary: #FB923C;
+  --brand-primary-hover: #F97316;
+  --brand-primary-active: #EA580C;
+  --brand-primary-foreground: #FFFFFF;
+
+  --brand-soft: #FFEDD5;
+  --brand-accent: #C2410C;
+  --brand-soft-border: #FDBA74;
+  --brand-panel: #C2410C;
+
+  --surface: #FFFFFF;
+  --surface-subtle: #F8FAFC;
+  --neutral-hover: #F1F5F9;
+
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #64748B;
+  --text-subtle: #94A3B8;
+
+  --border-default: #E2E8F0;
+  --border-strong: #CBD5E1;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--brand-primary);
+  --color-primary-hover: var(--brand-primary-hover);
+  --color-primary-active: var(--brand-primary-active);
+  --color-primary-foreground: var(--brand-primary-foreground);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-soft-border: var(--brand-soft-border);
+  --color-brand-panel: var(--brand-panel);
+  --color-workspace: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-neutral-hover: var(--neutral-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
   --font-sans: var(--font-plus-jakarta);
   --font-mono: var(--font-geist-mono);
 }
@@ -16,6 +56,19 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --brand-soft: rgba(251, 146, 60, 0.15);
+    --brand-accent: #FB923C;
+    --brand-soft-border: rgba(251, 146, 60, 0.4);
+    --brand-panel: #9A3412;
+    --surface: #18181b;
+    --surface-subtle: #09090b;
+    --neutral-hover: #27272a;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-subtle: #64748b;
+    --border-default: #27272a;
+    --border-strong: #3f3f46;
   }
 }
 

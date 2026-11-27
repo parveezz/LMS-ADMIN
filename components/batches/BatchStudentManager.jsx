@@ -675,7 +675,7 @@ export function BatchStudentManager({
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search by enrollment number, student name, or email..."
                   aria-label="Search eligible enrollments"
-                  className="w-full rounded-lg border border-zinc-200 bg-white py-2 pl-9 pr-3 text-xs text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40 disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+                  className="w-full rounded-lg border border-border-default bg-surface py-2 pl-9 pr-3 text-xs text-text-primary placeholder:text-text-subtle outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/40 disabled:opacity-60"
                 />
               </div>
 
@@ -722,11 +722,10 @@ export function BatchStudentManager({
                           setSelectedEnrollment(item);
                           setActionError("");
                         }}
-                        className={`flex w-full cursor-pointer items-center justify-between gap-3 px-3 py-2.5 text-left transition ${
-                          isSelected
-                            ? "bg-[#9FE870]/25 text-[#163300] dark:bg-[#9FE870]/15 dark:text-[#9FE870]"
-                            : "hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
-                        }`}
+                        className={`flex w-full cursor-pointer items-center justify-between gap-3 px-3 py-2.5 text-left transition ${isSelected
+                            ? "bg-brand-soft text-brand-accent"
+                            : "hover:bg-neutral-hover"
+                          }`}
                       >
                         <div className="min-w-0">
                           <div className="flex flex-wrap items-center gap-2">
@@ -754,7 +753,7 @@ export function BatchStudentManager({
                           </p>
                         </div>
                         {isSelected && (
-                          <FiCheck className="h-4 w-4 shrink-0 text-[#163300] dark:text-[#9FE870]" />
+                          <FiCheck className="h-4 w-4 shrink-0 text-brand-accent" />
                         )}
                       </button>
                     );
@@ -800,7 +799,7 @@ export function BatchStudentManager({
                         : "Assignment reason (optional)"
                     }
                     aria-label="Assignment reason"
-                    className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#163300] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                    className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-xs text-text-primary placeholder:text-text-subtle outline-none focus:border-primary"
                   />
                 </div>
               )}

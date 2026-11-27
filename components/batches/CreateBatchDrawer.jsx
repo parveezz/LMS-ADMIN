@@ -290,7 +290,7 @@ export function CreateBatchDrawer({
                     type="button"
                     disabled={isLoadingCourses}
                     onClick={onLoadMoreCourses}
-                    className="cursor-pointer text-xs font-medium text-[#163300] hover:underline disabled:opacity-50 dark:text-[#9FE870]"
+                    className="cursor-pointer text-xs font-medium text-brand-accent hover:underline disabled:opacity-50"
                   >
                     {isLoadingCourses ? "Loading..." : "Load more courses"}
                   </button>

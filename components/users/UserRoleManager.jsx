@@ -339,7 +339,7 @@ export function UserRoleManager({ userId, initialRoles = [], onRolesUpdated }) {
               disabled={isSelf || isMutating}
               onChange={(e) => setAssignRole(e.target.value)}
               aria-label="Select role to assign"
-              className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-800 outline-none focus:border-[#163300] disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200"
+              className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-secondary outline-none focus:border-primary disabled:opacity-60"
             >
               {assignableRoles.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -354,7 +354,7 @@ export function UserRoleManager({ userId, initialRoles = [], onRolesUpdated }) {
               onChange={(e) => setAssignReason(e.target.value)}
               maxLength={1000}
               placeholder="Reason (optional)"
-              className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#163300] disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+              className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-subtle outline-none focus:border-primary disabled:opacity-60"
             />
             <Button
               type="submit"
@@ -402,7 +402,7 @@ export function UserRoleManager({ userId, initialRoles = [], onRolesUpdated }) {
                   checked={checked}
                   disabled={disabled}
                   onChange={() => toggleReplaceRole(opt.value)}
-                  className="h-3.5 w-3.5 accent-[#163300]"
+                  className="h-3.5 w-3.5 accent-primary-active"
                 />
                 <span>{opt.label}</span>
               </label>
@@ -417,7 +417,7 @@ export function UserRoleManager({ userId, initialRoles = [], onRolesUpdated }) {
           onChange={(e) => setReplaceReason(e.target.value)}
           maxLength={1000}
           placeholder="Reason for role replacement (optional)"
-          className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#163300] disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-subtle outline-none focus:border-primary disabled:opacity-60"
         />
 
         {!confirmReplace ? (

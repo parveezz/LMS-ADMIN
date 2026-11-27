@@ -51,8 +51,8 @@ export function FloatingInput({
           onChange?.(e);
         }}
         className={[
-          "peer w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 outline-none transition-colors",
-          "focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40",
+          "peer w-full rounded-lg border border-border-default bg-surface px-4 py-3 text-sm text-text-primary outline-none transition-colors",
+          "focus:border-primary focus:ring-2 focus:ring-primary/40",
           className,
         ]
           .filter(Boolean)
@@ -64,9 +64,9 @@ export function FloatingInput({
         className={[
           "pointer-events-none absolute left-4 transition-all duration-200",
           isFloating
-            ? "-top-2.5 left-3 bg-white px-1 text-xs"
-            : "top-3 text-sm text-zinc-400",
-          focused ? "text-[#163300] font-medium" : isFloating ? "text-zinc-600" : "",
+            ? "-top-2.5 left-3 bg-surface px-1 text-xs"
+            : "top-3 text-sm text-text-subtle",
+          focused ? "text-brand-accent font-medium" : isFloating ? "text-text-muted" : "",
         ]
           .filter(Boolean)
           .join(" ")}

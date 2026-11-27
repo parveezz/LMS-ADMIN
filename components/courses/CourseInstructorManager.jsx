@@ -254,7 +254,7 @@ export function CourseInstructorManager({
                     {inst.full_name || "Instructor"}
                   </span>
                   {inst.is_primary && (
-                    <span className="inline-flex items-center rounded-full border border-[#9FE870] bg-[#9FE870]/30 px-2 py-0.5 text-[11px] font-semibold text-[#163300]">
+                    <span className="inline-flex items-center rounded-full border border-brand-soft-border bg-brand-soft px-2 py-0.5 text-[11px] font-semibold text-brand-accent">
                       Primary
                     </span>
                   )}
@@ -278,11 +278,10 @@ export function CourseInstructorManager({
                   </span>
                 )}
                 <span
-                  className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${
-                    inst.effective_teaching_eligible
+                  className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${inst.effective_teaching_eligible
                       ? "border-emerald-200 bg-emerald-50 text-emerald-700"
                       : "border-zinc-200 bg-zinc-100 text-zinc-600"
-                  }`}
+                    }`}
                 >
                   {inst.effective_teaching_eligible
                     ? "Eligible"
@@ -385,7 +384,7 @@ export function CourseInstructorManager({
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search active, eligible instructors by name, email, code, or specialization..."
                   aria-label="Search eligible instructors"
-                  className="w-full rounded-lg border border-zinc-200 bg-white py-2 pl-9 pr-3 text-xs text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40 disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+                  className="w-full rounded-lg border border-border-default bg-surface py-2 pl-9 pr-3 text-xs text-text-primary placeholder:text-text-subtle outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/40 disabled:opacity-60"
                 />
               </div>
 
@@ -433,11 +432,10 @@ export function CourseInstructorManager({
                           setSelectedInstructor(inst);
                           setActionError("");
                         }}
-                        className={`flex w-full cursor-pointer items-center justify-between gap-3 px-3 py-2.5 text-left transition ${
-                          isSelected
-                            ? "bg-[#9FE870]/25 text-[#163300] dark:bg-[#9FE870]/15 dark:text-[#9FE870]"
-                            : "hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
-                        }`}
+                        className={`flex w-full cursor-pointer items-center justify-between gap-3 px-3 py-2.5 text-left transition ${isSelected
+                            ? "bg-brand-soft text-brand-accent"
+                            : "hover:bg-neutral-hover"
+                          }`}
                       >
                         <div className="min-w-0">
                           <p className="truncate text-xs font-semibold text-zinc-900 dark:text-zinc-100">
@@ -454,7 +452,7 @@ export function CourseInstructorManager({
                           </p>
                         </div>
                         {isSelected && (
-                          <FiCheck className="h-4 w-4 shrink-0 text-[#163300] dark:text-[#9FE870]" />
+                          <FiCheck className="h-4 w-4 shrink-0 text-brand-accent" />
                         )}
                       </button>
                     );
@@ -493,7 +491,7 @@ export function CourseInstructorManager({
                       checked={isPrimary}
                       disabled={isMutating}
                       onChange={(e) => setIsPrimary(e.target.checked)}
-                      className="mt-0.5 h-3.5 w-3.5 rounded border-zinc-300 accent-[#163300]"
+                      className="mt-0.5 h-3.5 w-3.5 rounded border-border-strong accent-primary-active"
                     />
                     <span>
                       <span className="font-semibold">

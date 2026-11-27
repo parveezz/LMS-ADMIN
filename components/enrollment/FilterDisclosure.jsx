@@ -85,7 +85,7 @@ export function FilterDisclosure({
                     className={[
                       "flex h-6 w-6 items-center justify-center rounded-full transition",
                       isSelected
-                        ? "bg-[#22C55E] text-white"
+                        ? "bg-primary text-primary-foreground"
                         : "border-2 border-zinc-300 dark:border-zinc-600",
                     ].join(" ")}
                   >

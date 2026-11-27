@@ -70,7 +70,7 @@ const PROFILE_FIELDS = [
 ];
 
 const INPUT_CLASS =
-  "w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40 disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100";
+  "w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-subtle outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-60";
 
 const LABEL_CLASS =
   "mb-1 block text-xs font-semibold text-zinc-700 dark:text-zinc-300";
@@ -688,7 +688,7 @@ export function StudentDetailsDrawer({ studentSummary, onClose }) {
                       </div>
                       <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
                         <div
-                          className="h-full rounded-full bg-[#163300] dark:bg-[#9FE870]"
+                          className="h-full rounded-full bg-primary"
                           style={{
                             width: `${Math.min(100, Math.max(0, completeness.percentage || 0))}%`,
                           }}

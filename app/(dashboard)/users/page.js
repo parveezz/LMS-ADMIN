@@ -1,9 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FiAlertTriangle, FiCheckCircle, FiPlus, FiRefreshCw } from "react-icons/fi";
+import {
+  FiAlertTriangle,
+  FiBriefcase,
+  FiCheckCircle,
+  FiPlus,
+  FiRefreshCw,
+  FiShield,
+  FiUsers,
+} from "react-icons/fi";
 import { useAuth } from "@/context/AuthContext";
-import { PERMISSIONS } from "@/lib/permissions";
+import { PERMISSIONS, ROLES } from "@/lib/permissions";
 import { getUsersApi } from "@/lib/userApi";
 import { AccessRestricted } from "@/components/auth/AccessRestricted";
 import { PermissionGate } from "@/components/auth/PermissionGate";
@@ -12,6 +20,14 @@ import { CreateUserDrawer } from "@/components/users/CreateUserDrawer";
 import { UserDrawer } from "@/components/users/UserDrawer";
 import { UserFilters } from "@/components/users/UserFilters";
 import { UsersTable } from "@/components/users/UsersTable";
+
+const USER_CATEGORIES = [
+  { id: "all", label: "All Users", icon: FiUsers },
+  { id: "admins", label: "Admins", icon: FiShield },
+  { id: "instructors", label: "Instructors", icon: FiBriefcase },
+];
+
+const ADMIN_ROLE_VALUES = [ROLES.SUPER_ADMIN, ROLES.ADMIN];
 
 function UsersListContent() {
   const { isCheckingAuth, isAuthenticated, hasPermission } = useAuth();
@@ -26,6 +42,7 @@ function UsersListContent() {
   });
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
   const [role, setRole] = useState("");
   const [status, setStatus] = useState("");
@@ -47,11 +64,73 @@ function UsersListContent() {
     setError("");
 
     try {
+      if (category === "admins" && !ADMIN_ROLE_VALUES.includes(role)) {
+        const [superAdminRes, adminRes] = await Promise.all([
+          getUsersApi({
+            page: 1,
+            limit: 100,
+            search,
+            role: ROLES.SUPER_ADMIN,
+            status,
+          }),
+          getUsersApi({
+            page: 1,
+            limit: 100,
+            search,
+            role: ROLES.ADMIN,
+            status,
+          }),
+        ]);
+
+        if (currentRequestId !== requestIdRef.current) {
+          return;
+        }
+
+        const mergedById = new Map();
+        const combinedRows = [
+          ...(Array.isArray(superAdminRes?.data) ? superAdminRes.data : []),
+          ...(Array.isArray(adminRes?.data) ? adminRes.data : []),
+        ];
+
+        for (const item of combinedRows) {
+          if (item?.id && !mergedById.has(item.id)) {
+            mergedById.set(item.id, item);
+          }
+        }
+
+        const sortedUsers = Array.from(mergedById.values()).sort((a, b) => {
+          const timeA = a?.created_at ? new Date(a.created_at).getTime() : 0;
+          const timeB = b?.created_at ? new Date(b.created_at).getTime() : 0;
+          return timeB - timeA;
+        });
+
+        const total = sortedUsers.length;
+        const totalPages = Math.max(1, Math.ceil(total / limit));
+        const safePage = Math.min(page, totalPages);
+        const startIndex = (safePage - 1) * limit;
+
+        setUsers(sortedUsers.slice(startIndex, startIndex + limit));
+        setPagination({
+          page: safePage,
+          limit,
+          total,
+          totalPages,
+        });
+        return;
+      }
+
+      const effectiveRole =
+        category === "instructors"
+          ? ROLES.INSTRUCTOR
+          : category === "admins"
+            ? role
+            : role;
+
       const res = await getUsersApi({
         page,
         limit,
         search,
-        role,
+        role: effectiveRole,
         status,
       });
 
@@ -77,7 +156,17 @@ function UsersListContent() {
         setIsLoading(false);
       }
     }
-  }, [isCheckingAuth, isAuthenticated, canManageUsers, page, limit, search, role, status]);
+  }, [
+    isCheckingAuth,
+    isAuthenticated,
+    canManageUsers,
+    page,
+    limit,
+    category,
+    search,
+    role,
+    status,
+  ]);
 
   useEffect(() => {
     if (isCheckingAuth || !isAuthenticated || !canManageUsers) {
@@ -91,9 +180,25 @@ function UsersListContent() {
     return () => clearTimeout(timer);
   }, [isCheckingAuth, isAuthenticated, canManageUsers, fetchUsers]);
 
+  const handleCategoryChange = (nextCategory) => {
+    if (nextCategory === category) {
+      return;
+    }
+
+    setCategory(nextCategory);
+    if (nextCategory === "instructors") {
+      setRole(ROLES.INSTRUCTOR);
+    } else if (nextCategory === "admins") {
+      setRole((prev) => (ADMIN_ROLE_VALUES.includes(prev) ? prev : ""));
+    } else {
+      setRole("");
+    }
+    setPage(1);
+  };
+
   const handleReset = () => {
     setSearch("");
-    setRole("");
+    setRole(category === "instructors" ? ROLES.INSTRUCTOR : "");
     setStatus("");
     setPage(1);
   };
@@ -156,7 +261,36 @@ function UsersListContent() {
         </div>
       )}
 
+      <div
+        role="group"
+        aria-label="User category"
+        className="inline-flex w-full flex-wrap items-center gap-1.5 rounded-xl border border-border-default bg-surface p-1.5 sm:w-fit"
+      >
+        {USER_CATEGORIES.map((item) => {
+          const Icon = item.icon;
+          const isSelected = category === item.id;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              aria-pressed={isSelected}
+              onClick={() => handleCategoryChange(item.id)}
+              className={[
+                "inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors sm:flex-initial",
+                isSelected
+                  ? "bg-primary text-primary-foreground shadow-xs"
+                  : "text-text-secondary hover:bg-neutral-hover hover:text-text-primary",
+              ].join(" ")}
+            >
+              <Icon className="h-4 w-4 shrink-0" />
+              <span>{item.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
       <UserFilters
+        category={category}
         search={search}
         role={role}
         status={status}

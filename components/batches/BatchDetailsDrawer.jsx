@@ -64,7 +64,7 @@ const STATUS_TRANSITION_META = {
     description:
       "Target status: Active. Marks this batch as active. The parent course must be published.",
     buttonClass:
-      "border-[#163300] bg-[#163300] text-[#9FE870] hover:bg-[#1e4600]",
+      "border-primary bg-primary text-primary-foreground hover:bg-primary-hover",
   },
   completed: {
     label: "Mark Completed",

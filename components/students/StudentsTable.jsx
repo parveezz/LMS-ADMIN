@@ -28,12 +28,14 @@ export function StudentsTable({
   isLoading,
   hasActiveFilters,
   pagination,
+  canViewDetails = true,
   onPageChange,
   onLimitChange,
   onViewStudent,
 }) {
   const { page = 1, limit = 10, totalPages = 1, total = 0 } = pagination || {};
   const safeTotalPages = Math.max(1, totalPages);
+  const columnCount = canViewDetails ? 7 : 6;
 
   return (
     <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
@@ -47,14 +49,14 @@ export function StudentsTable({
               <th className="px-4 py-3">Phone Number</th>
               <th className="px-4 py-3">Account Status</th>
               <th className="px-4 py-3">Registration Date</th>
-              <th className="px-4 py-3 text-right">Actions</th>
+              {canViewDetails && <th className="px-4 py-3 text-right">Actions</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
             {isLoading ? (
               <tr>
                 <td
-                  colSpan={7}
+                  colSpan={columnCount}
                   className="px-4 py-10 text-center text-sm text-zinc-500"
                 >
                   Loading students...
@@ -63,7 +65,7 @@ export function StudentsTable({
             ) : students.length === 0 ? (
               <tr>
                 <td
-                  colSpan={7}
+                  colSpan={columnCount}
                   className="px-4 py-10 text-center text-sm text-zinc-500"
                 >
                   {hasActiveFilters
@@ -105,16 +107,18 @@ export function StudentsTable({
                     <td className="whitespace-nowrap px-4 py-3 text-xs text-zinc-500">
                       {formatDate(student.created_at)}
                     </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-right">
-                      <button
-                        type="button"
-                        onClick={() => onViewStudent?.(student)}
-                        className="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-zinc-200 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
-                      >
-                        <FiEye className="h-3.5 w-3.5" />
-                        <span>View</span>
-                      </button>
-                    </td>
+                    {canViewDetails && (
+                      <td className="whitespace-nowrap px-4 py-3 text-right">
+                        <button
+                          type="button"
+                          onClick={() => onViewStudent?.(student)}
+                          className="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-zinc-200 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                        >
+                          <FiEye className="h-3.5 w-3.5" />
+                          <span>View</span>
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 );
               })
