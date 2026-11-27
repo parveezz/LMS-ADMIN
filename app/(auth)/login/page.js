@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useAuth } from "@/context/AuthContext";
 import { loginApi } from "@/lib/authApi";
 import { Button } from "@/components/Button";
 import { FloatingInput } from "@/components/FloatingInput";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { isCheckingAuth, isAuthenticated, setUser, refreshSession } =
+    useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -17,13 +20,24 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (!isCheckingAuth && isAuthenticated) {
+      router.replace("/dashboard");
+    }
+  }, [isCheckingAuth, isAuthenticated, router]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setIsSubmitting(true);
 
     try {
-      await loginApi({ email, password });
+      const res = await loginApi({ email, password });
+      if (res?.data?.user) {
+        setUser(res.data.user);
+      } else {
+        await refreshSession();
+      }
       router.push("/dashboard");
       router.refresh();
     } catch (err) {

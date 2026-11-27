@@ -1,7 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import { listEnrollmentsApi } from "@/lib/enrollmentApi";
+import { PERMISSIONS } from "@/lib/permissions";
+import { AccessRestricted } from "@/components/auth/AccessRestricted";
 import { Button } from "@/components/Button";
 import { CreateEnrollmentModal } from "@/components/enrollment/CreateEnrollmentModal";
 import { EnrollmentDrawer } from "@/components/enrollment/EnrollmentDrawer";
@@ -9,6 +12,10 @@ import { EnrollmentFilters } from "@/components/enrollment/EnrollmentFilters";
 import { EnrollmentTable } from "@/components/enrollment/EnrollmentTable";
 
 export default function EnrollmentsPage() {
+  const { isCheckingAuth, isAuthenticated, hasPermission } = useAuth();
+  const canRead = hasPermission(PERMISSIONS.ENROLLMENTS_READ);
+  const canCreate = hasPermission(PERMISSIONS.ENROLLMENTS_CREATE);
+
   const [enrollments, setEnrollments] = useState([]);
   const [pagination, setPagination] = useState({
     page: 1,
@@ -28,6 +35,10 @@ export default function EnrollmentsPage() {
   const [selectedId, setSelectedId] = useState(null);
 
   const fetchEnrollments = useCallback(async () => {
+    if (isCheckingAuth || !isAuthenticated || !canRead) {
+      return;
+    }
+
     setIsLoading(true);
     setError("");
     try {
@@ -48,14 +59,27 @@ export default function EnrollmentsPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [page, search, registrationStatus, paymentStatus, enrollmentStatus]);
+  }, [
+    isCheckingAuth,
+    isAuthenticated,
+    canRead,
+    page,
+    search,
+    registrationStatus,
+    paymentStatus,
+    enrollmentStatus,
+  ]);
 
   useEffect(() => {
+    if (isCheckingAuth || !isAuthenticated || !canRead) {
+      return undefined;
+    }
+
     const timer = setTimeout(() => {
       fetchEnrollments();
     }, 250);
     return () => clearTimeout(timer);
-  }, [fetchEnrollments]);
+  }, [isCheckingAuth, isAuthenticated, canRead, fetchEnrollments]);
 
   const handleFilterReset = () => {
     setSearch("");
@@ -64,6 +88,25 @@ export default function EnrollmentsPage() {
     setEnrollmentStatus("");
     setPage(1);
   };
+
+  if (!isCheckingAuth && isAuthenticated && !canRead) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+            Enrollments
+          </h1>
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            Manage and review student course enrollments across the LMS platform.
+          </p>
+        </div>
+        <AccessRestricted
+          title="Enrollments Access Restricted"
+          message="Your account does not have permission to view enrollments."
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -77,13 +120,15 @@ export default function EnrollmentsPage() {
           </p>
         </div>
 
-        <Button
-          type="button"
-          onClick={() => setIsCreateOpen(true)}
-          className="shrink-0 px-5 py-2.5"
-        >
-          + New Enrollment
-        </Button>
+        {canCreate && (
+          <Button
+            type="button"
+            onClick={() => setIsCreateOpen(true)}
+            className="shrink-0 px-5 py-2.5"
+          >
+            + New Enrollment
+          </Button>
+        )}
       </div>
 
       <EnrollmentFilters
@@ -107,7 +152,7 @@ export default function EnrollmentsPage() {
           setEnrollmentStatus(val);
           setPage(1);
         }}
-        onOpenCreate={() => setIsCreateOpen(true)}
+        onOpenCreate={canCreate ? () => setIsCreateOpen(true) : undefined}
         onReset={handleFilterReset}
       />
 
@@ -128,11 +173,13 @@ export default function EnrollmentsPage() {
         onSelectEnrollment={(id) => setSelectedId(id)}
       />
 
-      <CreateEnrollmentModal
-        isOpen={isCreateOpen}
-        onClose={() => setIsCreateOpen(false)}
-        onCreated={fetchEnrollments}
-      />
+      {canCreate && (
+        <CreateEnrollmentModal
+          isOpen={isCreateOpen}
+          onClose={() => setIsCreateOpen(false)}
+          onCreated={fetchEnrollments}
+        />
+      )}
 
       <EnrollmentDrawer
         enrollmentId={selectedId}

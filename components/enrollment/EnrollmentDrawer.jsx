@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FiX } from "react-icons/fi";
+import { useAuth } from "@/context/AuthContext";
+import { PERMISSIONS } from "@/lib/permissions";
 import {
   getEnrollmentBatchHistoryApi,
   getEnrollmentByIdApi,
@@ -16,6 +18,10 @@ import { ENROLLMENT_STATUSES } from "./enrollmentConstants";
 import { StatusBadge } from "./StatusBadge";
 
 export function EnrollmentDrawer({ enrollmentId, onClose, onUpdated }) {
+  const { hasPermission } = useAuth();
+  const canUpdate = hasPermission(PERMISSIONS.ENROLLMENTS_UPDATE);
+  const canManage = hasPermission(PERMISSIONS.ENROLLMENTS_MANAGE);
+
   const [activeTab, setActiveTab] = useState("details"); // "details" | "actions" | "history"
   const [enrollment, setEnrollment] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -217,8 +223,10 @@ export function EnrollmentDrawer({ enrollmentId, onClose, onUpdated }) {
         {/* Tabs */}
         <div className="flex border-b border-zinc-200 px-6 text-xs font-semibold dark:border-zinc-800">
           {[
-            { id: "details", label: "Details & Edit" },
-            { id: "actions", label: "Status & Batch" },
+            { id: "details", label: canUpdate ? "Details & Edit" : "Details" },
+            ...(canManage
+              ? [{ id: "actions", label: "Status & Batch" }]
+              : []),
             { id: "history", label: "Batch History" },
           ].map((tab) => (
             <button
@@ -279,6 +287,7 @@ export function EnrollmentDrawer({ enrollmentId, onClose, onUpdated }) {
                 >
                   <FloatingInput
                     label="Student ID (UUID)"
+                    disabled={!canUpdate}
                     value={editForm.student_id}
                     onChange={(e) =>
                       setEditForm((p) => ({ ...p, student_id: e.target.value }))
@@ -286,6 +295,7 @@ export function EnrollmentDrawer({ enrollmentId, onClose, onUpdated }) {
                   />
                   <FloatingInput
                     label="Assigned Staff ID (UUID)"
+                    disabled={!canUpdate}
                     value={editForm.assigned_staff_id}
                     onChange={(e) =>
                       setEditForm((p) => ({
@@ -299,6 +309,7 @@ export function EnrollmentDrawer({ enrollmentId, onClose, onUpdated }) {
                     type="number"
                     min="0"
                     step="any"
+                    disabled={!canUpdate}
                     value={editForm.total_fee}
                     onChange={(e) =>
                       setEditForm((p) => ({ ...p, total_fee: e.target.value }))
@@ -307,18 +318,19 @@ export function EnrollmentDrawer({ enrollmentId, onClose, onUpdated }) {
                   <div>
                     <textarea
                       rows={3}
+                      disabled={!canUpdate}
                       value={editForm.notes}
                       onChange={(e) =>
                         setEditForm((p) => ({ ...p, notes: e.target.value }))
                       }
                       placeholder="Notes..."
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-4 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+                      className="w-full rounded-lg border border-zinc-200 bg-white px-4 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#163300] focus:ring-2 focus:ring-[#9FE870]/40 disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
                     />
                   </div>
                 </form>
               )}
 
-              {activeTab === "actions" && (
+              {activeTab === "actions" && canManage && (
                 <div className="space-y-6">
                   {/* Registration Status */}
                   <div className="space-y-3 rounded-lg border border-zinc-200 p-4 dark:border-zinc-800">
@@ -514,7 +526,7 @@ export function EnrollmentDrawer({ enrollmentId, onClose, onUpdated }) {
         </div>
 
         {/* Fixed Bottom Footer for Details & Edit */}
-        {activeTab === "details" && !isLoading && (
+        {activeTab === "details" && !isLoading && canUpdate && (
           <div className="border-t border-zinc-200 bg-white px-6 py-4 dark:border-zinc-800 dark:bg-zinc-900">
             <Button
               type="submit"
