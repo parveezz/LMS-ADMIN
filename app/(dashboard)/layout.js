@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { FiAward, FiBookOpen, FiGrid, FiKey, FiLogOut, FiUserCheck, FiUsers } from "react-icons/fi";
+import { FiAward, FiBookOpen, FiGrid, FiKey, FiLayers, FiLogOut, FiUserCheck, FiUsers } from "react-icons/fi";
 import { useAuth } from "@/context/AuthContext";
 import { PERMISSIONS, ROLES } from "@/lib/permissions";
 import { ChangePasswordDrawer } from "@/components/auth/ChangePasswordDrawer";
@@ -15,6 +15,13 @@ const NAV_ITEMS = [
     href: "/courses",
     icon: FiBookOpen,
     permission: PERMISSIONS.COURSES_READ,
+    roles: [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.STAFF],
+  },
+  {
+    label: "Batches",
+    href: "/batches",
+    icon: FiLayers,
+    permission: PERMISSIONS.BATCHES_READ,
     roles: [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.STAFF],
   },
   {
